@@ -92,8 +92,11 @@ public class Model {
      *  Empty spaces are stored as null.
      * */
     public static boolean emptySpaceExists(Board b) {
-        // TODO: Fill in this function.
-
+        for (int i=0;i<b.size();i++) {
+            for (int j=0;j<b.size();j++){
+                if (b.tile(j,i)==null) {return true;}
+            }
+        }
 
         return false;
     }
@@ -104,12 +107,28 @@ public class Model {
      * given a Tile object t, we get its value with t.value().
      */
     public static boolean maxTileExists(Board b) {
-        // TODO: Fill in this function.
-
+        for (int i=0;i<b.size();i++) {
+            for (int j=0;j<b.size();j++){
+                if (b.tile(j,i)!=null && b.tile(j,i).value()==MAX_PIECE) {return true;}
+            }
+        }
 
         return false;
     }
 
+    public static int checkRelative(Board b, Tile t, int colChange, int rowChange){
+        int column = t.col();
+        int row = t.row();
+        if (column+colChange>=b.size() || column+colChange<0) {
+            return -1;}
+        if (row+rowChange>=b.size() || row+rowChange<0) {
+            return -1;}
+        else {
+            Tile adjacent = b.tile(column+colChange,row+rowChange);
+            if (adjacent==null) {return 0;}
+            else {return adjacent.value();}
+        }
+    }
     /**
      * Returns true if there are any valid moves on the board.
      * There are two ways that there can be valid moves:
@@ -117,8 +136,17 @@ public class Model {
      * 2. There are two adjacent tiles with the same value.
      */
     public static boolean atLeastOneMoveExists(Board b) {
-        // TODO: Fill in this function.
-
+        if (emptySpaceExists(b)) {return true;}
+        for (int i=0;i<b.size();i++) {
+            for (int j=0;j<b.size();j++){
+                Tile thisTile = b.tile(j,i);
+                if (thisTile==null) {continue;}
+                if (checkRelative(b, thisTile, -1,0) == thisTile.value()) {return true;}
+                if (checkRelative(b, thisTile, 1,0) == thisTile.value()) {return true;}
+                if (checkRelative(b, thisTile, 0,-1) == thisTile.value()) {return true;}
+                if (checkRelative(b, thisTile, 0,1) == thisTile.value()) {return true;}
+            }
+        }
 
         return false;
     }
@@ -135,11 +163,37 @@ public class Model {
      *    value, then the leading two tiles in the direction of motion merge,
      *    and the trailing tile does not.
      * */
+
+    public void tiltColumn(int j, int start, int nstart, Side side) {
+        for (int i=start;i>=0;i--) {
+            Tile thisTile = tile(j,i);
+            if (thisTile==null) {continue;}
+            for (int n=nstart;n>0;n--) {
+                int valueCheck;
+                if (i+n>=size()) {valueCheck=-1;}
+                else {
+                    Tile adjacent = board.tile(j,i + n);
+                    if (adjacent == null) {valueCheck=0;}
+                    else {valueCheck=adjacent.value();}
+                }
+                System.out.println(valueCheck);
+                if (valueCheck==0 || valueCheck==thisTile.value()) {
+                    if(board.move(j,i+n,thisTile)) {score+=board.tile(j,i+n).value();}
+                    if (valueCheck==0) {nstart=i+n;} else {nstart=i+n-1;}
+                    break;
+                }
+            }
+        }
+
+    }
     public void tilt(Side side) {
         // TODO: Modify this.board (and if applicable, this.score) to account
         // for the tilt to the Side SIDE.
-
-
+        board.setViewingPerspective(side);
+        for (int j=0;j<size();j++) {
+            tiltColumn(j,size()-1,size()-1,side);
+        }
+        board.setViewingPerspective(Side.NORTH);
         checkGameOver();
     }
 
