@@ -148,6 +148,7 @@ public class LinkedListDequeTest {
         lld1.removeFirst();
         assertThat(lld1.toList()).isEmpty();
     }
+    @Test
     public void remove_last_to_empty() {
         Deque<Integer> lld1 = new LinkedListDeque<>();
         lld1.addFirst(0);
