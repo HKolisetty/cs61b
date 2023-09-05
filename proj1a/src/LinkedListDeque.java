@@ -9,14 +9,14 @@ public class LinkedListDeque<T> implements Deque<T> {
         private final T ITEM;
         private IntNode next;
         private IntNode prev;
-        private IntNode (T i, IntNode n) {
+        private IntNode(T i, IntNode n) {
             ITEM = i;
             next = n;
         }
     }
 
     public LinkedListDeque() {
-        SENTINEL = new IntNode(null,null);
+        SENTINEL = new IntNode(null, null);
         SENTINEL.next = SENTINEL;
         SENTINEL.prev = SENTINEL;
         last = SENTINEL.prev;
@@ -34,10 +34,10 @@ public class LinkedListDeque<T> implements Deque<T> {
         value.next = SENTINEL.next;
         SENTINEL.next = value;
         value.prev = SENTINEL;
-        if (size==0) {
+        if (size == 0) {
             last = value;
         }
-        size+=1;
+        size += 1;
     }
 
     /**
@@ -52,7 +52,7 @@ public class LinkedListDeque<T> implements Deque<T> {
         value.next = SENTINEL;
         value.prev = last;
         last = value;
-        size+=1;
+        size += 1;
     }
 
     /**
@@ -63,7 +63,7 @@ public class LinkedListDeque<T> implements Deque<T> {
      * @return List<T> list containing deque items in order
      */
     private List<T> toList(List<T> myList, IntNode p) {
-        if (p.ITEM ==null) {
+        if (p.ITEM == null) {
             return myList;
         } else {
             myList.add(p.ITEM);
@@ -109,13 +109,13 @@ public class LinkedListDeque<T> implements Deque<T> {
         if (isEmpty()) {
             return null;
         }
-        if (size==1) {
+        if (size == 1) {
             return removeLast();
         }
         IntNode value = SENTINEL.next;
         SENTINEL.next = SENTINEL.next.next;
         SENTINEL.next.prev = SENTINEL;
-        size-=1;
+        size -= 1;
         return value.ITEM;
     }
 
@@ -132,7 +132,7 @@ public class LinkedListDeque<T> implements Deque<T> {
         IntNode value = last;
         last = last.prev;
         last.next = SENTINEL;
-        size-=1;
+        size -= 1;
         return value.ITEM;
     }
 
@@ -144,11 +144,11 @@ public class LinkedListDeque<T> implements Deque<T> {
      */
     @Override
     public T get(int index) {
-        if (index<0 || index>=size) {
+        if (index < 0 || index >= size) {
             return null;
         }
         IntNode p = SENTINEL.next;
-        while (p.next != null && index!=0) {
+        while (p.next != null && index != 0) {
             p = p.next;
             index-=1;
         }
@@ -163,10 +163,10 @@ public class LinkedListDeque<T> implements Deque<T> {
      * @return item specified by index or null if index is out of range
      */
     private T getRecursive(int index, IntNode p) {
-        if (index==0 || p.ITEM ==null) {
+        if (index == 0 || p.ITEM == null) {
             return p.ITEM;
         } else {
-            return getRecursive(index-1,p.next);
+            return getRecursive(index - 1, p.next);
         }
     }
 
@@ -178,7 +178,7 @@ public class LinkedListDeque<T> implements Deque<T> {
      */
     @Override
     public T getRecursive(int index) {
-        if (index<0 || index>=size) {
+        if (index < 0 || index >= size) {
             return null;
         }
         return getRecursive(index, SENTINEL.next);
