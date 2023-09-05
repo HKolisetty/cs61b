@@ -88,7 +88,7 @@ public class LinkedListDeque<T> implements Deque<T> {
      */
     @Override
     public boolean isEmpty() {
-        return size==0;
+        return size == 0;
     }
 
     /**
@@ -150,7 +150,7 @@ public class LinkedListDeque<T> implements Deque<T> {
         IntNode p = SENTINEL.next;
         while (p.next != null && index != 0) {
             p = p.next;
-            index-=1;
+            index -= 1;
         }
         return p.ITEM;
     }
