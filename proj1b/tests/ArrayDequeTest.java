@@ -20,6 +20,11 @@ public class ArrayDequeTest {
          assertWithMessage("Found fields that are not array or primitives").that(badFields).isEmpty();
      }
 
+    @Test
+    void to_list_empty() {
+        Deque<Integer> arr1 = new ArrayDeque<>();
+        assertThat(arr1.toList()).isEmpty();
+    }
      @Test
      void add_first_only() {
          Deque<Integer> arr1 = new ArrayDeque<>();
@@ -77,12 +82,20 @@ public class ArrayDequeTest {
         assertThat(arr1.get(1)).isEqualTo(1);
     }
     @Test
-    void get_out_of_range() {
+    void get_oob_large() {
         Deque<Integer> arr1 = new ArrayDeque<>();
         arr1.addLast(0);
         arr1.addLast(1);
         arr1.addLast(2);
         assertThat(arr1.get(43)).isNull();
+    }
+    @Test
+    void get_oob_negative() {
+        Deque<Integer> arr1 = new ArrayDeque<>();
+        arr1.addLast(0);
+        arr1.addLast(1);
+        arr1.addLast(2);
+        assertThat(arr1.get(-2)).isNull();
     }
     @Test
     void is_empty_true() {
@@ -104,6 +117,94 @@ public class ArrayDequeTest {
         arr1.addLast(1);
         arr1.addLast(2);
         assertThat(arr1.size()).isEqualTo(3);
+    }
+    @Test
+    void size_after_remove_to_empty() {
+        Deque<Integer> arr1 = new ArrayDeque<>();
+        arr1.addLast(0);
+        arr1.removeLast();
+        assertThat(arr1.size()).isEqualTo(0);
+    }
+    @Test
+    void size_after_remove_from_empty() {
+        Deque<Integer> arr1 = new ArrayDeque<>();
+        assertThat(arr1.size()).isEqualTo(0);
+    }
+    @Test
+    void remove_first() {
+        Deque<Integer> arr1 = new ArrayDeque<>();
+        arr1.addLast(0);
+        arr1.addLast(1);
+        arr1.addLast(2);
+        arr1.removeFirst();
+        assertThat(arr1.toList()).containsExactly(1,2);
+    }
+    @Test
+    void remove_last() {
+        Deque<Integer> arr1 = new ArrayDeque<>();
+        arr1.addLast(0);
+        arr1.addLast(1);
+        arr1.addLast(2);
+        arr1.removeLast();
+        assertThat(arr1.toList()).containsExactly(0,1);
+    }
+    @Test
+    void remove_first_to_empty() {
+        Deque<Integer> arr1 = new ArrayDeque<>();
+        arr1.addLast(0);
+        arr1.addLast(1);
+        arr1.addLast(2);
+        arr1.removeFirst();
+        arr1.removeFirst();
+        arr1.removeFirst();
+        assertThat(arr1.toList()).isEmpty();
+    }
+    @Test
+    void remove_first_to_one() {
+        Deque<Integer> arr1 = new ArrayDeque<>();
+        arr1.addLast(0);
+        arr1.addLast(1);
+        arr1.addLast(2);
+        arr1.removeFirst();
+        arr1.removeFirst();
+        assertThat(arr1.toList()).containsExactly(2);
+    }
+    @Test
+    void remove_last_to_empty() {
+        Deque<Integer> arr1 = new ArrayDeque<>();
+        arr1.addLast(0);
+        arr1.addLast(1);
+        arr1.addLast(2);
+        arr1.removeLast();
+        arr1.removeLast();
+        arr1.removeLast();
+        assertThat(arr1.toList()).isEmpty();
+    }
+    @Test
+    void remove_last_to_one() {
+        Deque<Integer> arr1 = new ArrayDeque<>();
+        arr1.addLast(0);
+        arr1.addLast(1);
+        arr1.addLast(2);
+        arr1.removeLast();
+        arr1.removeLast();
+        assertThat(arr1.toList()).containsExactly(0);
+    }
+    @Test
+    void add_first_after_remove_to_empty() {
+        Deque<Integer> arr1 = new ArrayDeque<>();
+        arr1.addLast(0);
+        arr1.removeLast();
+        arr1.addFirst(1);
+        assertThat(arr1.toList()).containsExactly(1);
+    }
+    @Test
+    void add_last_after_remove_to_empty() {
+        Deque<Integer> arr1 = new ArrayDeque<>();
+        arr1.addLast(0);
+        arr1.removeLast();
+        arr1.addLast(1);
+        assertThat(arr1.toList()).containsExactly(1);
     }
     @Test
     void add_last_remove_last() {

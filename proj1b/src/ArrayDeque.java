@@ -158,6 +158,11 @@ public class ArrayDeque<T> implements Deque<T> {
         if (size > 16 && (double) size /array.length < 0.25) {
             resizeDown(2);
         }
+        size -= 1;
+        if (size == 0) {
+            endIndex = 0;
+            startIndex = 0;
+        }
         return returnItem;
     }
 
@@ -181,6 +186,11 @@ public class ArrayDeque<T> implements Deque<T> {
         endIndex = endValue;
         if (size > 16 && (double) size /array.length < 0.25) {
             resizeDown(2);
+        }
+        size -= 1;
+        if (size == 0) {
+            endIndex = 0;
+            startIndex = 0;
         }
         return returnItem;
     }
