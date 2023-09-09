@@ -250,4 +250,17 @@ public class ArrayDequeTest {
         }
         assertThat(arr1.toList()).containsExactly(19,18,17);
     }
+    @Test
+    void myget() {
+        Deque<Integer> arr1 = new ArrayDeque<>();
+        arr1.addFirst(0);
+        arr1.addLast(1);
+        arr1.removeLast();
+        arr1.addLast(3);
+        arr1.removeLast();
+        arr1.addLast(5);
+        arr1.addLast(6);
+        arr1.addFirst(7);
+        assertThat(arr1.get(0)).isEqualTo(7);
+    }
 }

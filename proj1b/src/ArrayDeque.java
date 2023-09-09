@@ -4,6 +4,8 @@ import java.util.List;
 public class ArrayDeque<T> implements Deque<T> {
     private T[] array;
     private int size, startIndex, endIndex;
+    private int constant1 = 16;
+    private double constant2 = 0.25;
 
     /**
      * Construct new empty list
@@ -87,7 +89,8 @@ public class ArrayDeque<T> implements Deque<T> {
         if (startValue == array.length) {
             startValue = 0;
         }
-        for (int i = startValue; i < endIndex || i > startIndex; i++) {
+        int i = startValue;
+        while (i < endIndex || i > startIndex) {
             if (startIndex <= endIndex && i >= endIndex) {
                 break;
             }
@@ -95,6 +98,7 @@ public class ArrayDeque<T> implements Deque<T> {
             if (i == array.length - 1) {
                 i = -1;
             }
+            i += 1;
         }
         return returnList;
     }
@@ -145,7 +149,7 @@ public class ArrayDeque<T> implements Deque<T> {
         if (isEmpty()) {
             return null;
         }
-        if (size > 16 && (double) size / array.length < 0.25) {
+        if (size > constant1 && (double) size / array.length < constant2) {
             resizeDown(2);
         }
         int startValue = startIndex + 1;
@@ -155,7 +159,7 @@ public class ArrayDeque<T> implements Deque<T> {
         T returnItem = array[startValue];
         array[startValue] = null;
         startIndex = startValue;
-        size = size - 1;
+        size -= 1;
         if (size == 0) {
             endIndex = 0;
             startIndex = 0;
@@ -173,7 +177,7 @@ public class ArrayDeque<T> implements Deque<T> {
         if (isEmpty()) {
             return null;
         }
-        if (size > 16 && (double) size / array.length < 0.25) {
+        if (size > constant1 && (double) size / array.length < constant2) {
             resizeDown(2);
         }
         int endValue = endIndex - 1;
@@ -183,7 +187,7 @@ public class ArrayDeque<T> implements Deque<T> {
         T returnItem = array[endValue];
         array[endValue] = null;
         endIndex = endValue;
-        size = size - 1;
+        size -= 1;
         if (size == 0) {
             endIndex = 0;
             startIndex = 0;
@@ -202,7 +206,10 @@ public class ArrayDeque<T> implements Deque<T> {
         if (index >= array.length || index < 0) {
             return null;
         }
-        return array[index];
+        if (index <= array.length - startIndex - 1) {
+            return array[startIndex + 1 + index];
+        }
+        return array[index - (array.length - startIndex - 1)];
     }
 
     /**
