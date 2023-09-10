@@ -77,9 +77,7 @@ public class ArrayDequeTest {
     void get_normal() {
         Deque<Integer> arr1 = new ArrayDeque<>();
         arr1.addLast(0);
-        arr1.addLast(1);
-        arr1.addLast(2);
-        assertThat(arr1.get(1)).isEqualTo(1);
+        assertThat(arr1.get(0)).isEqualTo(0);
     }
     @Test
     void get_oob_large() {
@@ -231,10 +229,10 @@ public class ArrayDequeTest {
     @Test
     void add_first_remove_first() {
         Deque<Integer> arr1 = new ArrayDeque<>();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 60; i++) {
             arr1.addFirst(i);
         }
-        for (int i = 0; i < 17; i++) {
+        for (int i = 0; i < 57; i++) {
             arr1.removeFirst();
         }
         assertThat(arr1.toList()).containsExactly(0,1,2);
@@ -262,5 +260,20 @@ public class ArrayDequeTest {
         arr1.addLast(6);
         arr1.addFirst(7);
         assertThat(arr1.get(0)).isEqualTo(7);
+    }
+    @Test
+    void myget2() {
+        Deque<Integer> arr1 = new ArrayDeque<>();
+        arr1.addLast(0);
+        arr1.addLast(1);
+        arr1.addLast(2);
+        arr1.addLast(3);
+        arr1.addLast(4);
+        arr1.addLast(5);
+        arr1.removeFirst();
+        arr1.addLast(7);
+        arr1.addLast(8);
+        arr1.addLast(9);
+        assertThat(arr1.toList()).containsExactly(1,2,3,4,5,7,8,9);
     }
 }

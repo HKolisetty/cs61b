@@ -4,8 +4,8 @@ import java.util.List;
 public class ArrayDeque<T> implements Deque<T> {
     private T[] array;
     private int size, startIndex, endIndex;
-    private int constant1 = 16;
-    private double constant2 = 0.25;
+    private static final int CONSTANT_1 = 16;
+    private static final double CONSTANT_2 = 0.25;
 
     /**
      * Construct new empty list
@@ -66,12 +66,15 @@ public class ArrayDeque<T> implements Deque<T> {
      */
     @Override
     public void addLast(T x) {
-        if (size == array.length) {
+        if (size == array.length - 1) {
             resizeUp(2);
         }
         array[endIndex] = x;
         size += 1;
         endIndex += 1;
+        if (endIndex == array.length) {
+            endIndex = 0;
+        }
         if (size == 1) {
             startIndex = array.length - 1;
         }
@@ -149,7 +152,7 @@ public class ArrayDeque<T> implements Deque<T> {
         if (isEmpty()) {
             return null;
         }
-        if (size > constant1 && (double) size / array.length < constant2) {
+        if (size > CONSTANT_1 && (double) size / array.length < CONSTANT_2) {
             resizeDown(2);
         }
         int startValue = startIndex + 1;
@@ -177,7 +180,7 @@ public class ArrayDeque<T> implements Deque<T> {
         if (isEmpty()) {
             return null;
         }
-        if (size > constant1 && (double) size / array.length < constant2) {
+        if (size > CONSTANT_1 && (double) size / array.length < CONSTANT_2) {
             resizeDown(2);
         }
         int endValue = endIndex - 1;
@@ -206,7 +209,7 @@ public class ArrayDeque<T> implements Deque<T> {
         if (index >= array.length || index < 0) {
             return null;
         }
-        if (index <= array.length - startIndex - 1) {
+        if (index <= array.length - startIndex - 1 && (index != 0 || size != 1)) {
             return array[startIndex + 1 + index];
         }
         return array[index - (array.length - startIndex - 1)];
