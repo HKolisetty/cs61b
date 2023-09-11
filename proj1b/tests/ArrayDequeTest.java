@@ -10,29 +10,29 @@ import static com.google.common.truth.Truth.assertWithMessage;
 
 public class ArrayDequeTest {
 
-     @Test
-     @DisplayName("ArrayDeque has no fields besides backing array and primitives")
-     void noNonTrivialFields() {
-         List<Field> badFields = Reflection.getFields(ArrayDeque.class)
-                 .filter(f -> !(f.getType().isPrimitive() || f.getType().equals(Object[].class) || f.isSynthetic()))
-                 .toList();
+    @Test
+    @DisplayName("ArrayDeque has no fields besides backing array and primitives")
+    void noNonTrivialFields() {
+        List<Field> badFields = Reflection.getFields(ArrayDeque.class)
+                .filter(f -> !(f.getType().isPrimitive() || f.getType().equals(Object[].class) || f.isSynthetic()))
+                .toList();
 
-         assertWithMessage("Found fields that are not array or primitives").that(badFields).isEmpty();
-     }
+        assertWithMessage("Found fields that are not array or primitives").that(badFields).isEmpty();
+    }
 
     @Test
     void to_list_empty() {
         Deque<Integer> arr1 = new ArrayDeque<>();
         assertThat(arr1.toList()).isEmpty();
     }
-     @Test
-     void add_first_only() {
-         Deque<Integer> arr1 = new ArrayDeque<>();
-         arr1.addFirst(2);
-         arr1.addFirst(1);
-         arr1.addFirst(0);
-         assertThat(arr1.toList()).containsExactly(0,1,2);
-     }
+    @Test
+    void add_first_only() {
+        Deque<Integer> arr1 = new ArrayDeque<>();
+        arr1.addFirst(2);
+        arr1.addFirst(1);
+        arr1.addFirst(0);
+        assertThat(arr1.toList()).containsExactly(0,1,2);
+    }
     @Test
     void add_last_only() {
         Deque<Integer> arr1 = new ArrayDeque<>();
@@ -235,7 +235,7 @@ public class ArrayDequeTest {
         for (int i = 0; i < 57; i++) {
             arr1.removeFirst();
         }
-        assertThat(arr1.toList()).containsExactly(0,1,2);
+        assertThat(arr1.toList()).containsExactly(2,1,0);
     }
     @Test
     void add_last_remove_first() {
@@ -275,5 +275,29 @@ public class ArrayDequeTest {
         arr1.addLast(8);
         arr1.addLast(9);
         assertThat(arr1.toList()).containsExactly(1,2,3,4,5,7,8,9);
+    }
+    @Test
+    void myget3() {
+        Deque<Integer> arr1 = new ArrayDeque<>();
+        arr1.addLast(0);
+        arr1.get(0);
+        arr1.removeLast();
+        arr1.addLast(3);
+        arr1.addLast(4);
+        arr1.removeFirst();
+        arr1.removeLast();
+        arr1.addFirst(7);
+        arr1.addLast(8);
+        arr1.addFirst(9);
+        arr1.addFirst(10);
+        arr1.addLast(11);
+        arr1.addLast(12);
+        arr1.removeLast();
+        arr1.addFirst(14);
+        arr1.removeFirst();
+        arr1.removeLast();
+        arr1.addLast(17);
+        arr1.removeLast();
+        assertThat(arr1.get(2)).isEqualTo(7);
     }
 }

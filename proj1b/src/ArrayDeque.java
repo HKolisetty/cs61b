@@ -129,17 +129,31 @@ public class ArrayDeque<T> implements Deque<T> {
     private void resizeDown(int n) {
         T[] newArray = (T[]) new Object[(int) (double) (array.length / n)];
         int change = array.length - newArray.length;
+        int store_startIndex = startIndex - change;
+        int store_endIndex = endIndex;
         for (int i = 0; i < newArray.length; i++) {
             if (i <= endIndex) {
-                newArray[i] = array[i];
+                if (startIndex <= endIndex) {
+                    newArray[i] = array[i+startIndex];
+                } else {
+                    newArray[i] = array[i];
+                }
             } else {
                 newArray[i] = array[i + change];
             }
-            if (i + change == startIndex) {
-                startIndex = i;
+            if (i + startIndex == startIndex && startIndex <= endIndex) {
+                store_startIndex = i;
+            }
+            if (i + startIndex == endIndex) {
+                store_endIndex = i;
+                if (startIndex <= endIndex) {
+                    break;
+                }
             }
         }
         array = newArray;
+        startIndex = store_startIndex;
+        endIndex = store_endIndex;
     }
 
     /**
@@ -152,7 +166,7 @@ public class ArrayDeque<T> implements Deque<T> {
         if (isEmpty()) {
             return null;
         }
-        if (size > CONSTANT_1 && (double) size / array.length < CONSTANT_2) {
+        if (array.length > CONSTANT_1 && ((double) size / array.length) < CONSTANT_2) {
             resizeDown(2);
         }
         int startValue = startIndex + 1;
@@ -209,7 +223,7 @@ public class ArrayDeque<T> implements Deque<T> {
         if (index >= array.length || index < 0) {
             return null;
         }
-        if (index <= array.length - startIndex - 1 && (index != 0 || size != 1)) {
+        if (index <= array.length - startIndex - 2 && (index != 0 || size != 1)) {
             return array[startIndex + 1 + index];
         }
         return array[index - (array.length - startIndex - 1)];
