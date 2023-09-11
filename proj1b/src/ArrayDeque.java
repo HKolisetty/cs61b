@@ -129,12 +129,12 @@ public class ArrayDeque<T> implements Deque<T> {
     private void resizeDown(int n) {
         T[] newArray = (T[]) new Object[(int) (double) (array.length / n)];
         int change = array.length - newArray.length;
-        int store_startIndex = startIndex - change;
-        int store_endIndex = endIndex;
+        int storeStartIndex = startIndex - change;
+        int storeEndIndex = endIndex;
         for (int i = 0; i < newArray.length; i++) {
             if (i <= endIndex) {
                 if (startIndex <= endIndex) {
-                    newArray[i] = array[i+startIndex];
+                    newArray[i] = array[i + startIndex];
                 } else {
                     newArray[i] = array[i];
                 }
@@ -142,19 +142,20 @@ public class ArrayDeque<T> implements Deque<T> {
                 newArray[i] = array[i + change];
             }
             if (i + startIndex == startIndex && startIndex <= endIndex) {
-                store_startIndex = i;
+                storeStartIndex = i;
             }
             if (i + startIndex == endIndex) {
-                store_endIndex = i;
+                storeEndIndex = i;
                 if (startIndex <= endIndex) {
                     break;
                 }
             }
         }
         array = newArray;
-        startIndex = store_startIndex;
-        endIndex = store_endIndex;
+        startIndex = storeStartIndex;
+        endIndex = storeEndIndex;
     }
+
 
     /**
      * Remove the first item from the deque
@@ -223,7 +224,7 @@ public class ArrayDeque<T> implements Deque<T> {
         if (index >= array.length || index < 0) {
             return null;
         }
-        if (index <= array.length - startIndex - 2 && (index != 0 || size != 1)) {
+        if (index <= array.length - startIndex - 2) {
             return array[startIndex + 1 + index];
         }
         return array[index - (array.length - startIndex - 1)];
@@ -237,3 +238,4 @@ public class ArrayDeque<T> implements Deque<T> {
         throw new UnsupportedOperationException("No need to implement getRecursive for proj 1b");
     }
 }
+

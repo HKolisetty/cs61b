@@ -224,7 +224,10 @@ public class ArrayDequeTest {
         for (int i = 0; i < 17; i++) {
             arr1.removeLast();
         }
-        assertThat(arr1.toList()).containsExactly(19,18,17);
+        for (int i = 0; i < 2; i++) {
+            arr1.addFirst(i);
+        }
+        assertThat(arr1.toList()).containsExactly(1,0,19,18,17);
     }
     @Test
     void add_first_remove_first() {
@@ -280,24 +283,18 @@ public class ArrayDequeTest {
     void myget3() {
         Deque<Integer> arr1 = new ArrayDeque<>();
         arr1.addLast(0);
-        arr1.get(0);
+        arr1.addFirst(2);
+        arr1.addFirst(3);
         arr1.removeLast();
-        arr1.addLast(3);
-        arr1.addLast(4);
+        arr1.addLast(6);
+        arr1.removeLast();
         arr1.removeFirst();
-        arr1.removeLast();
-        arr1.addFirst(7);
-        arr1.addLast(8);
-        arr1.addFirst(9);
         arr1.addFirst(10);
-        arr1.addLast(11);
-        arr1.addLast(12);
         arr1.removeLast();
-        arr1.addFirst(14);
+        arr1.addFirst(13);
+        arr1.removeLast();
+        arr1.addFirst(15);
         arr1.removeFirst();
-        arr1.removeLast();
-        arr1.addLast(17);
-        arr1.removeLast();
-        assertThat(arr1.get(2)).isEqualTo(7);
+        assertThat(arr1.get(0)).isEqualTo(13);
     }
 }
