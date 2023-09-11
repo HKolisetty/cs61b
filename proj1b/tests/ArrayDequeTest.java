@@ -1,3 +1,4 @@
+import edu.princeton.cs.algs4.In;
 import jh61b.utils.Reflection;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -296,5 +297,31 @@ public class ArrayDequeTest {
         arr1.addFirst(15);
         arr1.removeFirst();
         assertThat(arr1.get(0)).isEqualTo(13);
+    }
+    @Test
+    void myget4() {
+        Deque<Integer> arr1 = new ArrayDeque<>();
+        arr1.addLast(0);
+        arr1.removeFirst();
+        arr1.addLast(2);
+        arr1.removeFirst();
+        arr1.addLast(4);
+        arr1.addFirst(5);
+        arr1.addFirst(6);
+        arr1.removeLast();
+        arr1.addLast(9);
+        arr1.addLast(10);
+        arr1.addLast(11);
+        arr1.removeLast();
+        arr1.addFirst(13);
+        arr1.addFirst(14);
+        arr1.addFirst(15);
+        arr1.addFirst(16);
+        arr1.addLast(18);
+        arr1.addFirst(19);
+        arr1.removeLast();
+        arr1.addFirst(21);
+        arr1.removeFirst();
+        assertThat(arr1.removeLast()).isEqualTo(10);
     }
 }

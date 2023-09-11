@@ -45,7 +45,7 @@ public class ArrayDeque<T> implements Deque<T> {
      */
     @Override
     public void addFirst(T x) {
-        if (size == array.length) {
+        if (size >= array.length) {
             resizeUp(2);
         }
         array[startIndex] = x;
