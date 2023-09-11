@@ -324,4 +324,30 @@ public class ArrayDequeTest {
         arr1.removeFirst();
         assertThat(arr1.removeLast()).isEqualTo(10);
     }
+    @Test
+    void myget5() {
+        Deque<Integer> arr1 = new ArrayDeque<>();
+        arr1.addFirst(0);
+        arr1.addFirst(1);
+        arr1.removeLast();
+        arr1.addFirst(3);
+        arr1.removeFirst();
+        arr1.removeFirst();
+        arr1.addFirst(7);
+        arr1.addLast(8);
+        arr1.addFirst(10);
+        arr1.addFirst(11);
+        arr1.addFirst(12);
+        arr1.removeFirst();
+        arr1.addFirst(14);
+        arr1.addFirst(15);
+        arr1.addLast(16);
+        arr1.addFirst(17);
+        arr1.removeLast();
+        arr1.addFirst(19);
+        arr1.addLast(20);
+        arr1.addLast(21);
+        arr1.addLast(22);
+        assertThat(arr1.get(10)).isEqualTo(22);
+    }
 }
