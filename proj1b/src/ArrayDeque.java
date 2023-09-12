@@ -24,18 +24,23 @@ public class ArrayDeque<T> implements Deque<T> {
     private void resizeUp(int n) {
         T[] newArray = (T[]) new Object[array.length * n];
         boolean flag = false;
+        int storeEndIndex = endIndex;
+        if (startIndex <= endIndex) {
+            storeEndIndex = endIndex + array.length * (n - 1);
+        }
         for (int i = 0; i < array.length; i++) {
             if (i <= endIndex && !flag) {
                 newArray[i] = array[i];
             } else {
-                newArray[i + array.length] = array[i];
+                newArray[i + array.length * (n - 1)] = array[i];
             }
             if (i == startIndex) {
-                startIndex = i + array.length;
+                startIndex = i + array.length * (n - 1);
                 flag = true;
             }
         }
         array = newArray;
+        endIndex = storeEndIndex;
     }
 
     /**
@@ -45,7 +50,7 @@ public class ArrayDeque<T> implements Deque<T> {
      */
     @Override
     public void addFirst(T x) {
-        if (size >= array.length) {
+        if (size >= array.length - 2) {
             resizeUp(2);
         }
         array[startIndex] = x;
@@ -66,7 +71,7 @@ public class ArrayDeque<T> implements Deque<T> {
      */
     @Override
     public void addLast(T x) {
-        if (size >= array.length - 1) {
+        if (size >= array.length - 2) {
             resizeUp(2);
         }
         array[endIndex] = x;

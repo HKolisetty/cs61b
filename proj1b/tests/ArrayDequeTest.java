@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Random;
 
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
@@ -349,5 +350,52 @@ public class ArrayDequeTest {
         arr1.addLast(21);
         arr1.addLast(22);
         assertThat(arr1.get(10)).isEqualTo(22);
+    }
+    @Test
+    void myget6() {
+        Deque<Integer> arr1 = new ArrayDeque<>();
+        arr1.addFirst(0);
+        arr1.addFirst(1);
+        arr1.removeLast();
+        arr1.addFirst(3);
+        arr1.addFirst(5);
+        arr1.addFirst(7);
+        arr1.addLast(8);
+        arr1.addFirst(9);
+        arr1.removeLast();
+        arr1.addFirst(12);
+        arr1.addFirst(14);
+        arr1.addFirst(15);
+        arr1.addFirst(16);
+        assertThat(arr1.removeLast()).isEqualTo(1);
+    }
+    void random_test() {
+        Deque<Integer> arr1 = new ArrayDeque<>();
+//        Random rand = new Random();
+//        for(int i = 0; i < 25; i++) {
+//            int ran = rand.nextInt(4);
+//            if (ran == 0) {
+//                arr1.addFirst(i);
+//            } else if (ran == 1) {
+//                arr1.addLast(i);
+//            } else if (ran == 2) {
+//                arr1.removeFirst();
+//            } else {
+//                arr1.removeLast();
+//            }
+//        }
+//        assertThat(arr1.removeLast()).isEqualTo(3);
+        arr1.addFirst(0);
+        arr1.addFirst(1);
+        arr1.addFirst(2);
+        arr1.addFirst(3);
+        arr1.removeLast();
+        arr1.removeLast();
+        arr1.addFirst(4);
+        arr1.addFirst(5);
+        arr1.addFirst(6);
+        arr1.addFirst(7);
+        arr1.addFirst(8);
+        arr1.addFirst(9);
     }
 }
