@@ -212,12 +212,12 @@ public class LinkedListDeque<T> implements Deque<T> {
         if (this == other) {
             return true;
         }
-        if (other instanceof LinkedListDeque otherLinkedListDeque) {
-            if (this.size() != otherLinkedListDeque.size()) {
+        if (other instanceof Deque otherDeque) {
+            if (this.size() != otherDeque.size()) {
                 return false;
             }
             for (int i = 0; i < this.size(); i++) {
-                if (!this.get(i).equals(otherLinkedListDeque.get(i))) {
+                if (!this.get(i).equals(otherDeque.get(i))) {
                     return false;
                 }
             }

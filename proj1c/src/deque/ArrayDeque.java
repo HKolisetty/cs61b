@@ -270,12 +270,12 @@ public class ArrayDeque<T> implements Deque<T> {
         if (this == other) {
             return true;
         }
-        if (other instanceof ArrayDeque otherArrayDeque) {
-            if (this.size() != otherArrayDeque.size()) {
+        if (other instanceof Deque otherDeque) {
+            if (this.size() != otherDeque.size()) {
                 return false;
             }
             for (int i = 0; i < this.size(); i++) {
-                if (!this.get(i).equals(otherArrayDeque.get(i))) {
+                if (!this.get(i).equals(otherDeque.get(i))) {
                     return false;
                 }
             }
