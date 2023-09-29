@@ -1,3 +1,8 @@
+import edu.princeton.cs.algs4.In;
+
+import javax.lang.model.type.ArrayType;
+import java.util.ArrayList;
+
 public class UnionFind {
     /**
      * DO NOT DELETE OR MODIFY THIS, OTHERWISE THE TESTS WILL NOT PASS.
@@ -5,38 +10,49 @@ public class UnionFind {
      * in our disjoint sets.
      */
     private int[] data;
+    private int[] size;
 
     /* Creates a UnionFind data structure holding N items. Initially, all
        items are in disjoint sets. */
     public UnionFind(int N) {
-        // TODO: YOUR CODE HERE
+        data = new int[N];
+        size = new int[N];
+        for (int i = 0; i < N; i++) {
+            data[i] = -1;
+            size[i] = 1;
+        }
     }
 
     /* Returns the size of the set V belongs to. */
     public int sizeOf(int v) {
-        // TODO: YOUR CODE HERE
-        return -1;
+        return size[find(v)];
     }
 
     /* Returns the parent of V. If V is the root of a tree, returns the
        negative size of the tree for which V is the root. */
     public int parent(int v) {
-        // TODO: YOUR CODE HERE
-        return -1;
+        if (data[v] == -1) {
+            return -size[v];
+        }
+        return data[v];
     }
 
     /* Returns true if nodes/vertices V1 and V2 are connected. */
     public boolean connected(int v1, int v2) {
-        // TODO: YOUR CODE HERE
-        return false;
+        return find(v1) == find(v2);
     }
 
     /* Returns the root of the set V belongs to. Path-compression is employed
        allowing for fast search-time. If invalid items are passed into this
        function, throw an IllegalArgumentException. */
     public int find(int v) {
-        // TODO: YOUR CODE HERE
-        return -1;
+        if (v < 0 || v > data.length) {
+            throw new IllegalArgumentException();
+        }
+        if (data[v] == -1) {
+            return v;
+        }
+        return find(data[v]);
     }
 
     /* Connects two items V1 and V2 together by connecting their respective
@@ -45,7 +61,20 @@ public class UnionFind {
        root to V2's root. Union-ing a item with itself or items that are
        already connected should not change the structure. */
     public void union(int v1, int v2) {
-        // TODO: YOUR CODE HERE
+        int larger;
+        int smaller;
+        if (size[find(v1)] > size[find(v2)]) {
+            larger = find(v1);
+            smaller = find(v2);
+        } else {
+            larger = find(v2);
+            smaller = find(v1);
+        }
+        if (larger != smaller) {
+            data[smaller] = larger;
+            size[larger] = size[larger] + size[smaller];
+        }
+
     }
 
     /**
