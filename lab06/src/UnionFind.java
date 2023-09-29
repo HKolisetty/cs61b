@@ -52,6 +52,8 @@ public class UnionFind {
             if (parent(v2) >= 0) {
                 nextv2 = parent(v2);
             }
+            data[v1] = find(v1);
+            data[v2] = find(v2);
             return connected(nextv1,nextv2);
         }
     }

@@ -59,6 +59,7 @@ public class UnionFindTest {
         uf.union(8, 9);
         uf.union(4, 8);
         uf.union(4, 6);
+        uf.connected(4,6);
 
         assertThat(uf.find(5)).isEqualTo(9);
         assertThat(uf.find(7)).isEqualTo(9);
