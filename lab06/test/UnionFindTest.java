@@ -84,7 +84,30 @@ public class UnionFindTest {
     /**
      * Write your own tests below here to verify for correctness. The given tests are not comprehensive.
      */
+    @Test
+    public void test5() {
+        UnionFind uf = new UnionFind(17);
+        uf.union(1,0);
+        uf.union(3,0);
+        uf.union(4,0);
+        uf.union(12,5);
+        uf.union(5,1);
+        uf.union(6,1);
+        uf.union(7,1);
+        uf.union(11,5);
+        uf.union(15,11);
+        uf.union(13,6);
+        uf.union(9,2);
+        uf.union(14,8);
+        uf.union(8,2);
+        uf.union(2,0);
+        uf.union(10,3);
 
+
+        assertThat(uf.connected(15,10)).isTrue();
+        assertThat(uf.connected(14,13)).isTrue();
+        uf.union(16,0);
+    }
 }
 
 

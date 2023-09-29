@@ -52,8 +52,12 @@ public class UnionFind {
             if (parent(v2) >= 0) {
                 nextv2 = parent(v2);
             }
-            data[v1] = find(v1);
-            data[v2] = find(v2);
+            if (parent(v1) >= 0) {
+                data[v1] = find(v1);
+            }
+            if (parent(v2) >= 0) {
+                data[v2] = find(v2);
+            }
             return connected(nextv1,nextv2);
         }
     }
@@ -65,7 +69,7 @@ public class UnionFind {
         if (v < 0 || v > data.length) {
             throw new IllegalArgumentException();
         }
-        if (data[v] == -1) {
+        if (parent(v) < 0) {
             return v;
         }
         return find(data[v]);
@@ -77,14 +81,13 @@ public class UnionFind {
        root to V2's root. Union-ing a item with itself or items that are
        already connected should not change the structure. */
     public void union(int v1, int v2) {
-        int larger;
-        int smaller;
-        if (size[find(v1)] > size[find(v2)]) {
-            larger = find(v1);
-            smaller = find(v2);
-        } else {
-            larger = find(v2);
-            smaller = find(v1);
+        int rootv1 = find(v1);
+        int rootv2 = find(v2);
+        int larger = rootv2;
+        int smaller = rootv1;
+        if (sizeOf(v1) > sizeOf(v2)) {
+            larger = rootv1;
+            smaller = rootv2;
         }
         if (larger != smaller) {
             data[smaller] = larger;
