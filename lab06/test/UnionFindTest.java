@@ -108,6 +108,19 @@ public class UnionFindTest {
         assertThat(uf.connected(14,13)).isTrue();
         uf.union(16,0);
     }
+    @Test
+    public void test6() {
+        UnionFind uf = new UnionFind(8);
+        uf.union(1,0);
+        uf.union(2,0);
+        uf.union(3,1);
+        uf.union(4,2);
+        uf.union(5,3);
+        uf.union(6,4);
+        uf.union(3,4);
+
+        assertThat(uf.connected(3,4)).isTrue();
+    }
 }
 
 
