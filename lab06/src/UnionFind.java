@@ -46,7 +46,7 @@ public class UnionFind {
         if (data[v] < 0) {
             return v;
         }
-        data[v] = rootfind(v);
+//        data[v] = rootfind(v);
         return find(data[v]);
     }
     public int rootfind(int v) {
