@@ -10,56 +10,61 @@ public class UnionFind {
      * in our disjoint sets.
      */
     private int[] data;
-    private int[] size;
 
     /* Creates a UnionFind data structure holding N items. Initially, all
        items are in disjoint sets. */
     public UnionFind(int N) {
         data = new int[N];
-        size = new int[N];
         for (int i = 0; i < N; i++) {
             data[i] = -1;
-            size[i] = 1;
         }
     }
 
     /* Returns the size of the set V belongs to. */
     public int sizeOf(int v) {
-        return size[find(v)];
+        int myfind = find(v);
+        int size = 1;
+        for (int i = 0; i < data.length; i++) {
+            if (find(i) == myfind) {
+                size += 1;
+            }
+        }
+        return size;
     }
 
     /* Returns the parent of V. If V is the root of a tree, returns the
        negative size of the tree for which V is the root. */
     public int parent(int v) {
         if (data[v] == -1) {
-            return -size[v];
+            return -sizeOf(v);
         }
         return data[v];
     }
 
     /* Returns true if nodes/vertices V1 and V2 are connected. */
     public boolean connected(int v1, int v2) {
-        if (v1 == v2) {
-            return true;
-        } else if (parent(v1) < 0 && parent(v2) < 0) {
-            return false;
-        } else {
-            int nextv1 = v1;
-            int nextv2 = v2;
-            if (parent(v1) >= 0) {
-                nextv1 = parent(v1);
-            }
-            if (parent(v2) >= 0) {
-                nextv2 = parent(v2);
-            }
-            if (parent(v1) >= 0) {
-                data[v1] = find(v1);
-            }
-            if (parent(v2) >= 0) {
-                data[v2] = find(v2);
-            }
-            return connected(nextv1,nextv2);
-        }
+//        if (v1 == v2) {
+//            return true;
+//        } else if (parent(v1) < 0 && parent(v2) < 0) {
+//            return false;
+//        } else {
+//            int nextv1 = v1;
+//            int nextv2 = v2;
+//            if (parent(v1) >= 0) {
+//                nextv1 = parent(v1);
+//            }
+//            if (parent(v2) >= 0) {
+//                nextv2 = parent(v2);
+//            }
+//            if (parent(v1) >= 0) {
+//                data[v1] = find(v1);
+//            }
+//            if (parent(v2) >= 0) {
+//                data[v2] = find(v2);
+//            }
+//            return connected(nextv1,nextv2);
+//        }
+        return find(v1) == find(v2);
     }
 
     /* Returns the root of the set V belongs to. Path-compression is employed
@@ -69,14 +74,14 @@ public class UnionFind {
         if (v < 0 || v > data.length) {
             throw new IllegalArgumentException();
         }
-        if (parent(v) < 0) {
+        if (data[v] < 0) {
             return v;
         }
         data[v] = rootfind(v);
-        return find(parent(v));
+        return find(data[v]);
     }
     public int rootfind(int v) {
-        if (parent(v) < 0) {
+        if (data[v] < 0) {
             return v;
         }
         return rootfind(data[v]);
@@ -98,7 +103,6 @@ public class UnionFind {
         }
         if (larger != smaller) {
             data[smaller] = larger;
-            size[larger] = size[larger] + size[smaller];
         }
 
     }

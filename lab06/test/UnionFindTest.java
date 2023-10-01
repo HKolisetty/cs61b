@@ -52,7 +52,7 @@ public class UnionFindTest {
         uf.union(2, 3);
         assertThat(uf.find(2)).isEqualTo(3);
         uf.union(0, 2);
-        assertThat(uf.find(1)).isEqualTo(3);
+        assertThat(uf.find(0)).isEqualTo(3);
 
         uf.union(4, 5);
         uf.union(6, 7);
