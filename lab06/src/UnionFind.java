@@ -48,15 +48,11 @@ public class UnionFind {
             root = data[root];
         }
         while (v != root) {
-            int newv = data[v];
+            int nextv = data[v];
             data[v] = root;
-            v = newv;
+            v = nextv;
         }
         return root;
-//        if (data[v] < 0) {
-//            return v;
-//        }
-//        return find(data[v]);
     }
 
     /* Connects two items V1 and V2 together by connecting their respective
@@ -77,7 +73,9 @@ public class UnionFind {
 //            data[larger] += parent(smaller);
 //            data[smaller] = larger;
 //        }
-        helper(find(v1), find(v2));
+        if (v1 != v2 || !connected(v1, v2)) {
+            helper(find(v1), find(v2));
+        }
     }
     public void helper(int v1, int v2) {
         int larger = v2;
