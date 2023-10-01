@@ -72,7 +72,14 @@ public class UnionFind {
         if (parent(v) < 0) {
             return v;
         }
-        return find(data[v]);
+        data[v] = rootfind(v);
+        return find(parent(v));
+    }
+    public int rootfind(int v) {
+        if (parent(v) < 0) {
+            return v;
+        }
+        return rootfind(data[v]);
     }
 
     /* Connects two items V1 and V2 together by connecting their respective
