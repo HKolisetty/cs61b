@@ -48,15 +48,20 @@ public class UnionFind {
             int nextv2 = v2;
             if (parent(v1) >= 0) {
                 nextv1 = parent(v1);
-                data[v1] = find(v1);
             }
             if (parent(v2) >= 0) {
                 nextv2 = parent(v2);
+            }
+            if (parent(v1) >= 0) {
+                data[v1] = find(v1);
+            }
+            if (parent(v2) >= 0) {
                 data[v2] = find(v2);
             }
-            return connected(nextv1, nextv2);
+            return connected(nextv1,nextv2);
         }
     }
+
     /* Returns the root of the set V belongs to. Path-compression is employed
        allowing for fast search-time. If invalid items are passed into this
        function, throw an IllegalArgumentException. */
@@ -69,37 +74,24 @@ public class UnionFind {
         }
         return find(data[v]);
     }
+
     /* Connects two items V1 and V2 together by connecting their respective
        sets. V1 and V2 can be any element, and a union-by-size heuristic is
        used. If the sizes of the sets are equal, tie break by connecting V1's
        root to V2's root. Union-ing a item with itself or items that are
        already connected should not change the structure. */
     public void union(int v1, int v2) {
-        if (find(v1) != find(v2)) {
-            helper(find(v1), find(v2));
-        } else {
-            helper(v1, find(v1));
-            helper(v2, find(v2));
-        }
-
-    }
-    public void helper(int v1, int v2) {
-        int larger = v2;
-        int smaller = v1;
+        int rootv1 = find(v1);
+        int rootv2 = find(v2);
+        int larger = rootv2;
+        int smaller = rootv1;
         if (sizeOf(v1) > sizeOf(v2)) {
-            larger = v1;
-            smaller = v2;
+            larger = rootv1;
+            smaller = rootv2;
         }
-        if (smaller != larger) {
+        if (larger != smaller) {
             data[smaller] = larger;
             size[larger] = size[larger] + size[smaller];
-        }
-        if (size[smaller] != 1) {
-            for (int i = 0; i < data.length; i++) {
-                if (data[i] == smaller) {
-                    helper(i, larger);
-                }
-            }
         }
 
     }
