@@ -91,6 +91,10 @@ public class UnionFind {
             larger = v1;
             smaller = v2;
         }
+        if (smaller != larger) {
+            data[smaller] = larger;
+            size[larger] = size[larger] + size[smaller];
+        }
         if (size[smaller] != 1) {
             for (int i = 0; i < data.length; i++) {
                 if (data[i] == smaller) {
@@ -98,10 +102,7 @@ public class UnionFind {
                 }
             }
         }
-        if (smaller != larger) {
-            data[smaller] = larger;
-            size[larger] = size[larger] + size[smaller];
-        }
+
     }
 
     /**
