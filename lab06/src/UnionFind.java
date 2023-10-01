@@ -22,48 +22,17 @@ public class UnionFind {
 
     /* Returns the size of the set V belongs to. */
     public int sizeOf(int v) {
-        int myfind = find(v);
-        int size = 1;
-        for (int i = 0; i < data.length; i++) {
-            if (find(i) == myfind) {
-                size += 1;
-            }
-        }
-        return size;
+        return data[find(v)];
     }
 
     /* Returns the parent of V. If V is the root of a tree, returns the
        negative size of the tree for which V is the root. */
     public int parent(int v) {
-        if (data[v] == -1) {
-            return -sizeOf(v);
-        }
         return data[v];
     }
 
     /* Returns true if nodes/vertices V1 and V2 are connected. */
     public boolean connected(int v1, int v2) {
-//        if (v1 == v2) {
-//            return true;
-//        } else if (parent(v1) < 0 && parent(v2) < 0) {
-//            return false;
-//        } else {
-//            int nextv1 = v1;
-//            int nextv2 = v2;
-//            if (parent(v1) >= 0) {
-//                nextv1 = parent(v1);
-//            }
-//            if (parent(v2) >= 0) {
-//                nextv2 = parent(v2);
-//            }
-//            if (parent(v1) >= 0) {
-//                data[v1] = find(v1);
-//            }
-//            if (parent(v2) >= 0) {
-//                data[v2] = find(v2);
-//            }
-//            return connected(nextv1,nextv2);
-//        }
         return find(v1) == find(v2);
     }
 
@@ -97,14 +66,14 @@ public class UnionFind {
         int rootv2 = find(v2);
         int larger = rootv2;
         int smaller = rootv1;
-        if (sizeOf(v1) > sizeOf(v2)) {
+        if (-sizeOf(v1) > -sizeOf(v2)) {
             larger = rootv1;
             smaller = rootv2;
         }
         if (larger != smaller) {
+            data[larger] += parent(smaller);
             data[smaller] = larger;
         }
-
     }
 
     /**
