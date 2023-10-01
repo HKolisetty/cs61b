@@ -74,7 +74,19 @@ public class UnionFind {
 //            data[smaller] = larger;
 //        }
         if (v1 != v2 || !connected(v1, v2)) {
-            helper(find(v1), find(v2));
+//            helper(find(v1), find(v2));
+            int larger = find(v2);
+            int smaller = find(v1);
+            if (sizeOf(v1) > sizeOf(v2)) {
+                larger = find(v1);
+                smaller = find(v2);
+            }
+            if (larger != smaller) {
+                if (find(smaller) != larger) {
+                    data[larger] += parent(smaller);
+                }
+                data[smaller] = larger;
+            }
         }
     }
     public void helper(int v1, int v2) {
