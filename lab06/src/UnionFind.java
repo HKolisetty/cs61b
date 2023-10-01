@@ -62,20 +62,39 @@ public class UnionFind {
        root to V2's root. Union-ing a item with itself or items that are
        already connected should not change the structure. */
     public void union(int v1, int v2) {
-        int rootv1 = find(v1);
-        int rootv2 = find(v2);
-        int larger = rootv2;
-        int smaller = rootv1;
+//        int rootv1 = find(v1);
+//        int rootv2 = find(v2);
+//        int larger = rootv2;
+//        int smaller = rootv1;
+//        if (sizeOf(v1) > sizeOf(v2)) {
+//            larger = rootv1;
+//            smaller = rootv2;
+//        }
+//        if (larger != smaller) {
+//            data[larger] += parent(smaller);
+//            data[smaller] = larger;
+//        }
+        helper(find(v1), find(v2));
+    }
+    public void helper(int v1, int v2) {
+        int larger = v2;
+        int smaller = v1;
         if (sizeOf(v1) > sizeOf(v2)) {
-            larger = rootv1;
-            smaller = rootv2;
+            larger = v1;
+            smaller = v2;
         }
         if (larger != smaller) {
-            data[larger] += parent(smaller);
+            if (find(smaller) != larger) {
+                data[larger] += parent(smaller);
+            }
             data[smaller] = larger;
         }
+        for (int i = 0; i < data.length; i++) {
+            if (data[i] == smaller) {
+                helper(i, larger);
+            }
+        }
     }
-
     /**
      * DO NOT DELETE OR MODIFY THIS, OTHERWISE THE TESTS WILL NOT PASS.
      */
