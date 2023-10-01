@@ -66,7 +66,7 @@ public class UnionFind {
         int rootv2 = find(v2);
         int larger = rootv2;
         int smaller = rootv1;
-        if (-sizeOf(v1) > -sizeOf(v2)) {
+        if (sizeOf(v1) > sizeOf(v2)) {
             larger = rootv1;
             smaller = rootv2;
         }
