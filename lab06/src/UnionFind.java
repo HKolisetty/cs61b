@@ -43,17 +43,20 @@ public class UnionFind {
         if (v < 0 || v > data.length) {
             throw new IllegalArgumentException();
         }
-        if (data[v] < 0) {
-            return v;
+        int root = v;
+        while (data[root] >= 0) {
+            root = data[root];
         }
-//        data[v] = rootfind(v);
-        return find(data[v]);
-    }
-    public int rootfind(int v) {
-        if (data[v] < 0) {
-            return v;
+        while (v != root) {
+            int newv = data[v];
+            data[v] = root;
+            v = newv;
         }
-        return rootfind(data[v]);
+        return root;
+//        if (data[v] < 0) {
+//            return v;
+//        }
+//        return find(data[v]);
     }
 
     /* Connects two items V1 and V2 together by connecting their respective
