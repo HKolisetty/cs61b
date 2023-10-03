@@ -1,3 +1,4 @@
+import org.junit.Assert;
 import org.junit.Test;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -119,6 +120,22 @@ public class UnionFindTest {
         uf.union(6,4);
         uf.union(3,4);
 
+        assertThat(uf.connected(3,4)).isTrue();
+    }
+    @Test
+    public void test7() {
+        UnionFind uf = new UnionFind(11);
+        uf.union(1,0);
+        uf.union(2,1);
+        uf.union(0,3);
+        uf.union(4,5);
+        uf.union(5,6);
+        uf.union(6,7);
+        uf.union(7,8);
+        uf.union(9,3);
+        uf.union(10,3);
+        uf.union(3,4);
+        uf.union(3,4);
         assertThat(uf.connected(3,4)).isTrue();
     }
 }

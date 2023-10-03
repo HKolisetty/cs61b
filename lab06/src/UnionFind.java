@@ -47,6 +47,7 @@ public class UnionFind {
         while (data[root] >= 0) {
             root = data[root];
         }
+// This does bottom-up compression:
         while (v != root) {
             int nextv = data[v];
             data[v] = root;
@@ -61,19 +62,7 @@ public class UnionFind {
        root to V2's root. Union-ing a item with itself or items that are
        already connected should not change the structure. */
     public void union(int v1, int v2) {
-//        int rootv1 = find(v1);
-//        int rootv2 = find(v2);
-//        int larger = rootv2;
-//        int smaller = rootv1;
-//        if (sizeOf(v1) > sizeOf(v2)) {
-//            larger = rootv1;
-//            smaller = rootv2;
-//        }
-//        if (larger != smaller) {
-//            data[larger] += parent(smaller);
-//            data[smaller] = larger;
-//        }
-        if (v1 != v2 || !connected(v1, v2)) {
+        if (v1 != v2 && !connected(v1, v2)) {
 //            helper(find(v1), find(v2));
             int larger = find(v2);
             int smaller = find(v1);
@@ -89,6 +78,7 @@ public class UnionFind {
             }
         }
     }
+    // This does top-down compression:
     public void helper(int v1, int v2) {
         int larger = v2;
         int smaller = v1;
