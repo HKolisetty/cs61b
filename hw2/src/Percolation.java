@@ -7,8 +7,6 @@ public class Percolation {
     HashSet<Integer> open;
     WeightedQuickUnionUF topdata;
     WeightedQuickUnionUF bottomdata;
-
-    int first;
     int top;
     int bottom;
 
@@ -35,28 +33,30 @@ public class Percolation {
             return;
         }
         open.add(value);
-        if (row > 0) {
-            if (isOpen(row - 1, col)) {
-                topdata.union(value, xyTo1D(row - 1, col));
-                bottomdata.union(value, xyTo1D(row - 1, col));
+        if (length != 1) {
+            if (row > 0) {
+                if (isOpen(row - 1, col)) {
+                    topdata.union(value, xyTo1D(row - 1, col));
+                    bottomdata.union(value, xyTo1D(row - 1, col));
+                }
             }
-        }
-        if (row < length - 1) {
-            if (isOpen(row + 1, col)) {
-                topdata.union(value, xyTo1D(row + 1, col));
-                bottomdata.union(value, xyTo1D(row + 1, col));
+            if (row < length - 1) {
+                if (isOpen(row + 1, col)) {
+                    topdata.union(value, xyTo1D(row + 1, col));
+                    bottomdata.union(value, xyTo1D(row + 1, col));
+                }
             }
-        }
-        if (col > 0) {
-            if (isOpen(row, col - 1)) {
-                topdata.union(value, xyTo1D(row, col - 1));
-                bottomdata.union(value, xyTo1D(row, col - 1));
+            if (col > 0) {
+                if (isOpen(row, col - 1)) {
+                    topdata.union(value, xyTo1D(row, col - 1));
+                    bottomdata.union(value, xyTo1D(row, col - 1));
+                }
             }
-        }
-        if (col < length - 1) {
-            if (isOpen(row, col + 1)) {
-                topdata.union(value, xyTo1D(row, col + 1));
-                bottomdata.union(value, xyTo1D(row, col + 1));
+            if (col < length - 1) {
+                if (isOpen(row, col + 1)) {
+                    topdata.union(value, xyTo1D(row, col + 1));
+                    bottomdata.union(value, xyTo1D(row, col + 1));
+                }
             }
         }
         if (row == 0) {
