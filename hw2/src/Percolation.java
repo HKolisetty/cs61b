@@ -61,6 +61,7 @@ public class Percolation {
         }
         if (row == 0) {
             topdata.union(value, top);
+            bottomdata.union(value, top);
         } else if (row == length - 1) {
             bottomdata.union(value, bottom);
         }
