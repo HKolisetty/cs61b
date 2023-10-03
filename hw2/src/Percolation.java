@@ -86,7 +86,7 @@ public class Percolation {
     }
 
     public boolean percolates() {
-        return topdata.connected(top, bottom) && bottomdata.connected(top, bottom);
+        return bottomdata.connected(top, bottom);
     }
 
     private int xyTo1D(int row, int col) {
