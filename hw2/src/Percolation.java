@@ -1,38 +1,93 @@
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Percolation {
-    // TODO: Add any necessary instance variables.
+    int length;
+    HashSet<Integer> open;
+    WeightedQuickUnionUF data;
+    int first;
+    int top;
+    int bottom;
+
 
     public Percolation(int N) {
-        // TODO: Fill in this constructor.
+        if (N <= 0) {
+            throw new java.lang.IllegalArgumentException();
+        }
+        length = N;
+        open = new HashSet<Integer>(N);
+        data = new WeightedQuickUnionUF((length * length) + 2);
+        top = length * length;
+        bottom = (length * length) + 1;
+
     }
 
     public void open(int row, int col) {
-        // TODO: Fill in this method.
+        if (row < 0 || row >= length || col < 0 || col >= length) {
+            throw new java.lang.IndexOutOfBoundsException();
+        }
+        int value = xyTo1D(row, col);
+        if (open.contains(value)) {
+            return;
+        }
+        open.add(value);
+        if (row > 0) {
+            if (isOpen(row - 1, col)) {
+                data.union(value, xyTo1D(row - 1, col));
+            }
+        }
+        if (row < length - 1) {
+            if (isOpen(row + 1, col)) {
+                data.union(value, xyTo1D(row + 1, col));
+            }
+        }
+        if (col > 0) {
+            if (isOpen(row, col - 1)) {
+                data.union(value, xyTo1D(row, col - 1));
+            }
+        }
+        if (col < length - 1) {
+            if (isOpen(row, col + 1)) {
+                data.union(value, xyTo1D(row, col + 1));
+            }
+        }
+        if (row == 0) {
+            data.union(value, top);
+        } else if (row == length - 1) {
+            data.union(value, bottom);
+        }
     }
 
     public boolean isOpen(int row, int col) {
-        // TODO: Fill in this method.
-        return false;
+        if (row < 0 || row >= length || col < 0 || col >= length) {
+            throw new java.lang.IndexOutOfBoundsException();
+        }
+        return open.contains(xyTo1D(row, col));
     }
 
     public boolean isFull(int row, int col) {
-        // TODO: Fill in this method.
-        return false;
+        if (row < 0 || row >= length || col < 0 || col >= length) {
+            throw new java.lang.IndexOutOfBoundsException();
+        }
+        return data.connected(top, xyTo1D(row, col));
     }
 
     public int numberOfOpenSites() {
-        // TODO: Fill in this method.
-        return 0;
+        return open.size();
     }
 
     public boolean percolates() {
-        // TODO: Fill in this method.
-        return false;
+        return data.connected(top, bottom);
     }
 
-    // TODO: Add any useful helper methods (we highly recommend this!).
-    // TODO: Remove all TODO comments before submitting.
-
+    private int xyTo1D(int row, int col) {
+        if (row < 0 || row >= length || col < 0 || col >= length) {
+            throw new java.lang.IndexOutOfBoundsException();
+        }
+        return (length * row) + col;
+    }
 }
