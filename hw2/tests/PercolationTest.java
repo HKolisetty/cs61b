@@ -21,6 +21,7 @@ public class PercolationTest {
         int[][] openSites = {
                 {0, 1},
                 {2, 0},
+                {2, 1},
                 {3, 1},
                 {4, 1},
                 {1, 0},
@@ -29,20 +30,30 @@ public class PercolationTest {
         int[][] expectedState = {
                 {0, 3, 0, 0, 0},
                 {3, 3, 0, 0, 0},
-                {3, 0, 0, 0, 0},
-                {0, 1, 0, 0, 0},
-                {0, 1, 0, 0, 0}
+                {3, 3, 0, 0, 0},
+                {0, 3, 0, 0, 0},
+                {0, 3, 0, 0, 0}
         };
         for (int[] site : openSites) {
             p.open(site[0], site[1]);
         }
         assertThat(getState(N, p)).isEqualTo(expectedState);
-        assertThat(p.percolates()).isFalse();
+        assertThat(p.percolates()).isTrue();
     }
 
     @Test
-    public void yourTestHere() {
-        // TODO: write some more tests
+    public void test1() {
+        int N = 5;
+        Percolation p = new Percolation(2);
+        int[][] openSites = {
+                {0,0},
+                {1,0},
+                {1,1}
+        };
+        for (int[] site : openSites) {
+            p.open(site[0], site[1]);
+        }
+        assertThat(p.percolates()).isTrue();
     }
 
 }
