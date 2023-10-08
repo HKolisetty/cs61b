@@ -1,4 +1,4 @@
-package main;
+package ngrams;
 
 import edu.princeton.cs.algs4.In;
 import ngrams.TimeSeries;

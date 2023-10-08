@@ -2,7 +2,7 @@
 /*
 import browser.NgordnetQuery;
 import main.HistoryTextHandler;
-import main.NGramMap;
+import ngrams.NGramMap;
 
 import org.junit.jupiter.api.Test;
 import java.util.List;

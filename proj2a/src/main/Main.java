@@ -1,6 +1,7 @@
 package main;
 
 import browser.NgordnetServer;
+import ngrams.NGramMap;
 
 public class Main {
     public static void main(String[] args) {

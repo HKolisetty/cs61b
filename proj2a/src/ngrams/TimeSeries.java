@@ -2,7 +2,6 @@ package ngrams;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 
 /**
@@ -127,7 +126,7 @@ public class TimeSeries extends TreeMap<Integer, Double> {
         }
         return copy;
     }
-    static private Integer getNext(Integer key, TimeSeries ts) {
+    private static Integer getNext(Integer key, TimeSeries ts) {
         if (key.equals(ts.lastKey())) {
             return key;
         }
