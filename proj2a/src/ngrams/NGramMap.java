@@ -57,7 +57,7 @@ public class NGramMap {
      */
     public TimeSeries countHistory(String word, int startYear, int endYear) {
         if (dict.containsKey(word)) {
-            if (startYear>= dict.get(word).firstKey() && endYear <= dict.get(word).lastKey()) {
+            if (endYear >= dict.get(word).firstKey() && startYear <= dict.get(word).lastKey()) {
                 return new TimeSeries(dict.get(word), startYear, endYear);
             }
         }
@@ -88,7 +88,7 @@ public class NGramMap {
      */
     public TimeSeries weightHistory(String word, int startYear, int endYear) {
         if (dict.containsKey(word)) {
-            if (startYear>= dict.get(word).firstKey() && endYear <= dict.get(word).lastKey()) {
+            if (endYear >= dict.get(word).firstKey() && startYear <= dict.get(word).lastKey()) {
                 return new TimeSeries(dict.get(word), startYear, endYear).dividedBy(wordCount);
             }
         }
@@ -113,7 +113,7 @@ public class NGramMap {
         TimeSeries result = new TimeSeries();
         for (String i : words) {
             if (dict.containsKey(i)) {
-                if (startYear>= dict.get(i).firstKey() && endYear <= dict.get(i).lastKey()) {
+                if (endYear >= dict.get(i).firstKey() && startYear <= dict.get(i).lastKey()) {
                     result = result.plus(weightHistory(i, startYear, endYear));
                 }
             }
