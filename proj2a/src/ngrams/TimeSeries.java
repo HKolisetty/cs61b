@@ -89,6 +89,10 @@ public class TimeSeries extends TreeMap<Integer, Double> {
         TimeSeries copy = new TimeSeries();
         if (this.isEmpty() && ts.isEmpty()) {
             return copy;
+        } else if (this.isEmpty()) {
+            return new TimeSeries(ts, MIN_YEAR, MAX_YEAR);
+        } else if (ts.isEmpty()) {
+            return new TimeSeries(this, MIN_YEAR, MAX_YEAR);
         }
         Integer key1 = this.firstKey();
         Double value1 = this.get(key1);

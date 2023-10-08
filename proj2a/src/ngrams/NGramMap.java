@@ -1,9 +1,7 @@
 package ngrams;
 
 import edu.princeton.cs.algs4.In;
-import ngrams.TimeSeries;
 
-import java.sql.Time;
 import java.util.Collection;
 import java.util.TreeMap;
 
@@ -23,7 +21,7 @@ import static ngrams.TimeSeries.MIN_YEAR;
 public class NGramMap {
 
     private TreeMap<String, TimeSeries> dict;
-    private TimeSeries words;
+    private TimeSeries wordCount;
 
     /**
      * Constructs an NGramMap from WORDSFILENAME and COUNTSFILENAME.
@@ -39,14 +37,14 @@ public class NGramMap {
             }
             dict.get(splitLine[0]).put(Integer.parseInt(splitLine[1]), Double.parseDouble(splitLine[2]));
         }
-        words = new TimeSeries();
+        wordCount = new TimeSeries();
         In in2 = new In(countsFilename);
         while (!in2.isEmpty()) {
             String nextLine = in2.readLine();
             String[] splitLine = nextLine.split(",");
             int year = Integer.parseInt(splitLine[0]);
             double count = Double.parseDouble(splitLine[1]);
-            words.put(year, count);
+            wordCount.put(year, count);
         }
     }
 
@@ -68,14 +66,14 @@ public class NGramMap {
      * is not in the data files, returns an empty TimeSeries.
      */
     public TimeSeries countHistory(String word) {
-        return dict.get(word);
+        return new TimeSeries(dict.get(word), MIN_YEAR, MAX_YEAR);
     }
 
     /**
      * Returns a defensive copy of the total number of words recorded per year in all volumes.
      */
     public TimeSeries totalCountHistory() {
-        return new TimeSeries(words, MIN_YEAR, MAX_YEAR);
+        return new TimeSeries(wordCount, MIN_YEAR, MAX_YEAR);
     }
 
     /**
@@ -84,7 +82,7 @@ public class NGramMap {
      * TimeSeries.
      */
     public TimeSeries weightHistory(String word, int startYear, int endYear) {
-        return new TimeSeries(dict.get(word), startYear, endYear).dividedBy(words);
+        return new TimeSeries(dict.get(word), startYear, endYear).dividedBy(wordCount);
     }
 
     /**
@@ -93,7 +91,7 @@ public class NGramMap {
      * TimeSeries.
      */
     public TimeSeries weightHistory(String word) {
-        return new TimeSeries(dict.get(word), MIN_YEAR, MAX_YEAR).dividedBy(words);
+        return new TimeSeries(dict.get(word), MIN_YEAR, MAX_YEAR).dividedBy(wordCount);
     }
 
     /**
@@ -104,7 +102,7 @@ public class NGramMap {
     public TimeSeries summedWeightHistory(Collection<String> words, int startYear, int endYear) {
         TimeSeries result = new TimeSeries();
         for (String i : words) {
-            result.plus(weightHistory(i, startYear, endYear));
+            result = result.plus(weightHistory(i, startYear, endYear));
         }
         return result;
     }
@@ -116,7 +114,7 @@ public class NGramMap {
     public TimeSeries summedWeightHistory(Collection<String> words) {
         TimeSeries result = new TimeSeries();
         for (String i : words) {
-            result.plus(weightHistory(i));
+            result = result.plus(weightHistory(i));
         }
         return result;
     }
