@@ -71,7 +71,7 @@ public class NGramMap {
      * is not in the data files, returns an empty TimeSeries.
      */
     public TimeSeries countHistory(String word) {
-        return new TimeSeries(dict.get(word), MIN_YEAR, MAX_YEAR);
+        return countHistory(word, MIN_YEAR, MAX_YEAR);
     }
 
     /**
