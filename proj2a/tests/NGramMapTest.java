@@ -1,4 +1,4 @@
-import ngrams.NGramMap;
+import main.NGramMap;
 import ngrams.TimeSeries;
 
 import org.junit.jupiter.api.Test;

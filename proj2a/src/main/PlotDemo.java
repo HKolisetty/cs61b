@@ -1,6 +1,5 @@
 package main;
 
-import ngrams.NGramMap;
 import ngrams.TimeSeries;
 import plotting.Plotter;
 import org.knowm.xchart.XYChart;
