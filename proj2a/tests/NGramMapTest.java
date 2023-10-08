@@ -72,4 +72,11 @@ public class NGramMapTest {
         assertThat(fishPlusDogWeight.get(1865)).isWithin(1E-10).of(expectedFishPlusDogWeight1865);
     }
 
-}  
+    @Test
+    public void test3() {
+        NGramMap ngm = new NGramMap("./data/ngrams/top_14377_words.csv",
+                "./data/ngrams/total_counts.csv");
+        TimeSeries adopt = ngm.countHistory("adopt", 1420, 1430);
+        assertThat(adopt).isNotNull();
+    }
+}

@@ -56,7 +56,12 @@ public class NGramMap {
      * returns an empty TimeSeries.
      */
     public TimeSeries countHistory(String word, int startYear, int endYear) {
-        return new TimeSeries(dict.get(word), startYear, endYear);
+        if (dict.containsKey(word)) {
+            if (startYear>= dict.get(word).firstKey() && endYear <= dict.get(word).lastKey()) {
+                return new TimeSeries(dict.get(word), startYear, endYear);
+            }
+        }
+        return new TimeSeries();
     }
 
     /**
@@ -82,7 +87,12 @@ public class NGramMap {
      * TimeSeries.
      */
     public TimeSeries weightHistory(String word, int startYear, int endYear) {
-        return new TimeSeries(dict.get(word), startYear, endYear).dividedBy(wordCount);
+        if (dict.containsKey(word)) {
+            if (startYear>= dict.get(word).firstKey() && endYear <= dict.get(word).lastKey()) {
+                return new TimeSeries(dict.get(word), startYear, endYear).dividedBy(wordCount);
+            }
+        }
+        return new TimeSeries();
     }
 
     /**
@@ -91,7 +101,7 @@ public class NGramMap {
      * TimeSeries.
      */
     public TimeSeries weightHistory(String word) {
-        return new TimeSeries(dict.get(word), MIN_YEAR, MAX_YEAR).dividedBy(wordCount);
+        return weightHistory(word, MIN_YEAR, MAX_YEAR);
     }
 
     /**
@@ -102,7 +112,12 @@ public class NGramMap {
     public TimeSeries summedWeightHistory(Collection<String> words, int startYear, int endYear) {
         TimeSeries result = new TimeSeries();
         for (String i : words) {
-            result = result.plus(weightHistory(i, startYear, endYear));
+            if (dict.containsKey(i)) {
+                if (startYear>= dict.get(i).firstKey() && endYear <= dict.get(i).lastKey()) {
+                    result = result.plus(weightHistory(i, startYear, endYear));
+                }
+            }
+
         }
         return result;
     }
@@ -112,10 +127,6 @@ public class NGramMap {
      * exist in this time frame, ignore it rather than throwing an exception.
      */
     public TimeSeries summedWeightHistory(Collection<String> words) {
-        TimeSeries result = new TimeSeries();
-        for (String i : words) {
-            result = result.plus(weightHistory(i));
-        }
-        return result;
+        return summedWeightHistory(words, MIN_YEAR, MAX_YEAR);
     }
 }
