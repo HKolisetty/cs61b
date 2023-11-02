@@ -12,7 +12,8 @@ import hashmap.MyHashMap;
  *  @author Josh Hug
  *  @author Brendan Hu
  */
-public class InsertRandomSpeedTest {
+public class
+InsertRandomSpeedTest {
     /**
      * Requests user input and performs tests of three different set
      * implementations. ARGS is unused. 

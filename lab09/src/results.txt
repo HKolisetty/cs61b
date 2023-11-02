@@ -1,0 +1,39 @@
+InsertRandomSpeedTest for ULLMap, MyHashMap, Java's HashMap:
+N = 1:
+    ULLMap - 0 sec
+    MyHashMap - 0 sec
+    Java's HashMap - 0 sec
+N = 10:
+    ULLMap - 0 sec
+    MyHashMap - 0 sec
+    Java's HashMap - 0 sec
+N = 1000:
+    ULLMap - 0 sec
+    MyHashMap - 0 sec
+    Java's HashMap - 0 sec
+N = 10,000:
+    ULLMap - 0.28 sec
+    MyHashMap - 0.02 sec
+    Java's HashMap - 0 sec
+N = 20,000:
+    ULLMap - 1.22 sec
+    MyHashMap - 0.01 sec
+    Java's HashMap - 0.01 sec
+
+InsertInOrderSpeedTest for ULLMap, MyHashMap, Java's HashMap:
+N = 1:
+    ULLMap - 0 sec
+    MyHashMap - 0 sec
+    Java's HashMap - 0 sec
+N = 1000:
+    ULLMap - 0.01 sec
+    MyHashMap - 0.01 sec
+    Java's HashMap - 0 sec
+N = 10,000:
+    ULLMap - 0.59 sec
+    MyHashMap - 0.01 sec
+    Java's HashMap - 0.01 sec
+N = 20,000:
+    ULLMap - 2.33 sec
+    MyHashMap - 0.02 sec
+    Java's HashMap - 0.02 sec
