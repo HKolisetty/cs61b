@@ -11,8 +11,8 @@ public class Main {
         String countFile = "./data/ngrams/total_counts.csv";
         NGramMap ngm = new NGramMap(wordFile, countFile);
 
-        String synsets = "./data/wordnet/synsets11.txt";
-        String hyponyms = "./data/wordnet/hyponyms11.txt";
+        String synsets = "./data/wordnet/synsets.txt";
+        String hyponyms = "./data/wordnet/hyponyms.txt";
         Graph graph = new Graph(synsets, hyponyms);
 
         hns.startUp();

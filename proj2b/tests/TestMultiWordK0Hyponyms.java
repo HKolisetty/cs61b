@@ -24,7 +24,7 @@ public class TestMultiWordK0Hyponyms {
                 WORDS_FILE, TOTAL_COUNTS_FILE, SMALL_SYNSET_FILE, SMALL_HYPONYM_FILE);
         List<String> words = List.of("occurrence", "change");
 
-        NgordnetQuery nq = new NgordnetQuery(words, 0, 0, 1);
+        NgordnetQuery nq = new NgordnetQuery(words, 0, 0, 0);
         String actual = studentHandler.handle(nq);
         String expected = "[alteration, change, increase, jump, leap, modification, saltation, transition]";
         assertThat(actual).isEqualTo(expected);

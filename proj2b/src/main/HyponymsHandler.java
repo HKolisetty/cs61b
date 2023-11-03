@@ -3,11 +3,7 @@ package main;
 import browser.NgordnetQuery;
 import browser.NgordnetQueryHandler;
 import ngrams.NGramMap;
-import ngrams.TimeSeries;
-import org.knowm.xchart.XYChart;
-import plotting.Plotter;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class HyponymsHandler extends NgordnetQueryHandler {
