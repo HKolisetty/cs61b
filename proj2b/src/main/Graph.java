@@ -8,7 +8,6 @@ import java.util.Arrays;
 
 public class Graph {
     private TreeMap<Integer, String> intToWord;
-    private int numVertices;
     private TreeMap<Integer, ArrayList<Integer>> adjList;
     public TreeMap<String, ArrayList<Integer>> dupes;
     public Graph(String synsetsFileName, String hyponymsFileName) {
@@ -24,18 +23,15 @@ public class Graph {
             if (!intToWord.containsKey(id)) {
                 intToWord.put(id, word);
                 adjList.put(id, new ArrayList<>());
-
-                String[] wordlist = word.split("\\s+");
-                for (String i : wordlist) {
-                    if (!dupes.containsKey(word)) {
-                        dupes.put(i, new ArrayList<>());
-                    }
-                    dupes.get(i).add(id);
+            }
+            String[] wordlist = word.split("\\s+");
+            for (String i : wordlist) {
+                if (!dupes.containsKey(i)) {
+                    dupes.put(i, new ArrayList<>());
                 }
-
+                dupes.get(i).add(id);
             }
         }
-        numVertices = intToWord.size();
         In hyponymsFile = new In(hyponymsFileName);
         while (!hyponymsFile.isEmpty()) {
             String nextLine = hyponymsFile.readLine();

@@ -14,6 +14,8 @@ public class TestMultiWordK0Hyponyms {
     public static final String TOTAL_COUNTS_FILE = "data/ngrams/total_counts.csv";
     public static final String SMALL_SYNSET_FILE = "data/wordnet/synsets16.txt";
     public static final String SMALL_HYPONYM_FILE = "data/wordnet/hyponyms16.txt";
+    public static final String MEDIUM_SYNSET_FILE = "data/wordnet/synsets1000-subgraph.txt";
+    public static final String MEDIUM_HYPONYM_FILE = "data/wordnet/hyponyms1000-subgraph.txt";
     public static final String LARGE_SYNSET_FILE = "data/wordnet/synsets.txt";
     public static final String LARGE_HYPONYM_FILE = "data/wordnet/hyponyms.txt";
 
@@ -30,7 +32,26 @@ public class TestMultiWordK0Hyponyms {
         assertThat(actual).isEqualTo(expected);
     }
 
-    // TODO: Add more unit tests (including edge case tests) here.
+    @Test
+    public void test2() {
+        NgordnetQueryHandler studentHandler = AutograderBuddy.getHyponymHandler(
+                WORDS_FILE, TOTAL_COUNTS_FILE, LARGE_SYNSET_FILE, LARGE_HYPONYM_FILE);
+        List<String> words = List.of("video", "recording");
 
-    // TODO: Create similar unit test files for the k != 0 cases.
+        NgordnetQuery nq = new NgordnetQuery(words, 0, 0, 0);
+        String actual = studentHandler.handle(nq);
+        String expected = "[video, video_recording, videocassette, videotape]";
+        assertThat(actual).isEqualTo(expected);
+    }
+    @Test
+    public void test3() {
+        NgordnetQueryHandler studentHandler = AutograderBuddy.getHyponymHandler(
+                WORDS_FILE, TOTAL_COUNTS_FILE, LARGE_SYNSET_FILE, LARGE_HYPONYM_FILE);
+        List<String> words = List.of("pastry", "tart");
+
+        NgordnetQuery nq = new NgordnetQuery(words, 0, 0, 0);
+        String actual = studentHandler.handle(nq);
+        String expected = "[apple_tart, lobster_tart, quiche, quiche_Lorraine, tart, tartlet]";
+        assertThat(actual).isEqualTo(expected);
+    }
 }
