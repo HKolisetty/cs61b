@@ -45,7 +45,7 @@ public class HyponymsHandler extends NgordnetQueryHandler {
                 if (q.startYear() == 0 || q.endYear() == 0) {
                     count = (int) map.countHistory(word).entrySet().stream().mapToDouble(Map.Entry::getValue).sum();
                 } else {
-                    count = (int) map.countHistory(word).entrySet().stream().mapToDouble(Map.Entry::getValue).sum();
+                    count = (int) map.countHistory(word, q.startYear(), q.endYear()).entrySet().stream().mapToDouble(Map.Entry::getValue).sum();
                 }
                 if (topList.size() < q.k()) {
                     topList.add(word);
