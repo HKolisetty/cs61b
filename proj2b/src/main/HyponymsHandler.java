@@ -33,16 +33,20 @@ public class HyponymsHandler extends NgordnetQueryHandler {
             list = wordList;
         }
 
-        for (HashSet i : lists) {
+        for (HashSet<String> i : lists) {
             list.retainAll(i);
         }
-        ArrayList<String> returnList = new ArrayList<>();
-        returnList.addAll(list);
+        ArrayList<String> returnList = new ArrayList<>(list);
         if (q.k() > 0) {
             ArrayList<String> topList = new ArrayList<>();
             ArrayList<Integer> topReturns = new ArrayList<>();
             for (String word : returnList) {
-                int count = map.countHistory(word, q.startYear(), q.endYear()).size();
+                int count;
+                if (q.startYear() == 0 || q.endYear() == 0) {
+                    count = (int) map.countHistory(word).entrySet().stream().mapToDouble(Map.Entry::getValue).sum();
+                } else {
+                    count = (int) map.countHistory(word).entrySet().stream().mapToDouble(Map.Entry::getValue).sum();
+                }
                 if (topList.size() < q.k()) {
                     topList.add(word);
                     topReturns.add(count);
