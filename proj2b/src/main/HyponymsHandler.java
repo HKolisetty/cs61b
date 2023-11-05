@@ -6,8 +6,6 @@ import ngrams.NGramMap;
 import ngrams.TimeSeries;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 public class HyponymsHandler extends NgordnetQueryHandler {
@@ -27,6 +25,9 @@ public class HyponymsHandler extends NgordnetQueryHandler {
         for (String word : words) {
             HashSet<String> wordList = new HashSet<>();
             HashSet<HashSet<String>> wordLists = new HashSet<>();
+            if (!graph.dupes.containsKey(word)) {
+                return "[]";
+            }
             for (int id : graph.dupes.get(word)) {
                 wordLists.add(graph.getChildren(id));
             }
@@ -44,7 +45,6 @@ public class HyponymsHandler extends NgordnetQueryHandler {
         if (q.k() > 0) {
             ArrayList<String> topList = new ArrayList<>();
             ArrayList<Double> topReturns = new ArrayList<>();
-            HashMap<String, Double> hi = new HashMap<>();
             for (String word : returnList) {
                 double count;
                 if (q.startYear() == 0 || q.endYear() == 0) {

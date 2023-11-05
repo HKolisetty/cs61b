@@ -26,15 +26,14 @@ public class TestOneWordK0Hyponyms {
         String expected = "[act, action, change, demotion, human_action, human_activity, variation]";
         assertThat(actual).isEqualTo(expected);
     }
-
     @Test
     public void test2() {
         NgordnetQueryHandler studentHandler = AutograderBuddy.getHyponymHandler(
                 WORDS_FILE, TOTAL_COUNTS_FILE, SMALL_SYNSET_FILE, SMALL_HYPONYM_FILE);
-        List<String> words = List.of("event");
+        List<String> words = List.of("burger");
 
         NgordnetQuery nq = new NgordnetQuery(words, 0, 0, 0);
         String actual = studentHandler.handle(nq);
-        String expected = "[act, action, change, demotion, human_action, human_activity, variation]";
+        String expected = "[]";
         assertThat(actual).isEqualTo(expected);
     }}
