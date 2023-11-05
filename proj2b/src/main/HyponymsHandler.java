@@ -25,17 +25,16 @@ public class HyponymsHandler extends NgordnetQueryHandler {
         for (String word : words) {
             HashSet<String> wordList = new HashSet<>();
             HashSet<HashSet<String>> wordLists = new HashSet<>();
-            if (!graph.dupes.containsKey(word)) {
-                return "[]";
+            if (graph.dupes.containsKey(word)) {
+                for (int id : graph.dupes.get(word)) {
+                    wordLists.add(graph.getChildren(id));
+                }
+                for (HashSet<String> i : wordLists) {
+                    wordList.addAll(i);
+                }
+                lists.add(wordList);
+                list = wordList;
             }
-            for (int id : graph.dupes.get(word)) {
-                wordLists.add(graph.getChildren(id));
-            }
-            for (HashSet<String> i : wordLists) {
-                wordList.addAll(i);
-            }
-            lists.add(wordList);
-            list = wordList;
         }
 
         for (HashSet<String> i : lists) {
