@@ -77,5 +77,15 @@ public class TestMultiWordK0Hyponyms {
         String expected = "[hole, mouth, trap]";
         assertThat(actual).isEqualTo(expected);
     }
+    @Test
+    public void test6() {
+        NgordnetQueryHandler studentHandler = AutograderBuddy.getHyponymHandler(
+                VERY_SHORT_TEXT, TOTAL_COUNTS_FILE, LARGE_SYNSET_FILE, LARGE_HYPONYM_FILE);
+        List<String> words = List.of("unit");
 
+        NgordnetQuery nq = new NgordnetQuery(words, 1470, 2019, 3);
+        String actual = studentHandler.handle(nq);
+        String expected = "[are, at, in]";
+        assertThat(actual).isEqualTo(expected);
+    }
 }
