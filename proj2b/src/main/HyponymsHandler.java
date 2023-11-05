@@ -3,8 +3,11 @@ package main;
 import browser.NgordnetQuery;
 import browser.NgordnetQueryHandler;
 import ngrams.NGramMap;
+import ngrams.TimeSeries;
 
 import java.util.*;
+
+import static com.google.common.truth.Truth.assertThat;
 
 public class HyponymsHandler extends NgordnetQueryHandler {
     private NGramMap map;
@@ -41,20 +44,23 @@ public class HyponymsHandler extends NgordnetQueryHandler {
             ArrayList<String> topList = new ArrayList<>();
             ArrayList<Integer> topReturns = new ArrayList<>();
             for (String word : returnList) {
-                int count;
+                double count;
                 if (q.startYear() == 0 || q.endYear() == 0) {
-                    count = (int) map.countHistory(word).entrySet().stream().mapToDouble(Map.Entry::getValue).sum();
+                    TimeSeries ts = map.countHistory(word);
+                    count = ts.data().stream().reduce(0.0, Double::sum);
                 } else {
-                    count = (int) map.countHistory(word, q.startYear(), q.endYear()).entrySet().stream().mapToDouble(Map.Entry::getValue).sum();
+                    TimeSeries ts = map.countHistory(word, q.startYear(), q.endYear());
+                    count = ts.data().stream().reduce(0.0, Double::sum);
                 }
                 if (topList.size() < q.k()) {
                     topList.add(word);
-                    topReturns.add(count);
+                    topReturns.add((int) count);
                 } else {
                     int minValue = Collections.min(topReturns);
-                    if (count > minValue) {
+                    if (topList.size() >= q.k() && count > minValue) {
                         topList.remove(topReturns.indexOf(minValue));
-                        topReturns.add(count);
+                        topReturns.remove(topReturns.indexOf(minValue));
+                        topReturns.add((int) count);
                         topList.add(word);
                     }
                 }
