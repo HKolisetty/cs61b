@@ -52,14 +52,18 @@ public class HyponymsHandler extends NgordnetQueryHandler {
                     TimeSeries ts = map.countHistory(word, q.startYear(), q.endYear());
                     count = ts.data().stream().reduce(0.0, Double::sum);
                 }
-                if (topList.size() < q.k()) {
+//                System.out.println("word: " + word + "\t" + count);
+                if (topList.size() < q.k() && count > 0) {
                     topList.add(word);
                     topReturns.add((int) count);
                 } else {
-                    int minValue = Collections.min(topReturns);
-                    if (topList.size() >= q.k() && count > minValue) {
+                    int minValue = 0;
+                    if (topList.size() != 0) {
+                        minValue = Collections.min(topReturns);
+                    }
+                    if (topList.size() >= q.k() && count > minValue && count > 0) {
                         topList.remove(topReturns.indexOf(minValue));
-                        topReturns.remove(topReturns.indexOf(minValue));
+                        topReturns.remove((Integer) minValue);
                         topReturns.add((int) count);
                         topList.add(word);
                     }
