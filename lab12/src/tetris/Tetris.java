@@ -98,7 +98,7 @@ public class Tetris {
     private void updateBoard() {
         // Grabs the current piece.
         Tetromino t = currentTetromino;
-        if (actionDeltaTime() > 1000) {
+        if (actionDeltaTime() > 100) {
             movement.dropDown();
             resetActionTimer();
             Tetromino.draw(t, board, t.pos.x, t.pos.y);
@@ -219,6 +219,7 @@ public class Tetris {
             clearLines();
             renderBoard();
         }
+        System.exit(0);
         // TODO: Set up your game loop. The game should keep running until the game is over.
         // Use helper methods inside your game loop, according to the spec description.
 
